@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ASCII RPG Android</string>
+    <string name="startingRow">--@--</string>
+    <string name="emptyRow">-----</string>
+    <string name="left_button_desc">moves char left</string>
+    <string name="right_button_desc">moves char right</string>
+    <string name="up_button_desc">moves char up</string>
+    <string name="down_button_desc">moves char down</string>
+</resources>

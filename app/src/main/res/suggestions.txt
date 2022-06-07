@@ -1,0 +1,4 @@
+- finish Player class
+- create Enemy class
+- create Entity class (?)
+- design Player-Enemy interactions
