@@ -3,7 +3,12 @@
 package com.asciirpg.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import com.asciirpg.entity.Player;
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         // Initializes player position
         player = new Player();
         gameMap.draw(player, player.getPos());
+        processColor();
     }
 
     public void moveLeft(View v) {
@@ -48,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
+        processColor();
     }
 
     public void moveRight(View v) {
@@ -65,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
+        processColor();
+
     }
 
     public void moveUp(View v) {
@@ -88,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
+        processColor();
     }
 
     public void moveDown(View v) {
@@ -111,6 +121,17 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
+        processColor();
+    }
+
+    private void processColor() {
+        String text = gameMap.getRow(player.getPos().getRow()).getText().toString();
+
+        SpannableString ss = new SpannableString(text);
+        ForegroundColorSpan fcs = new ForegroundColorSpan(Color.RED);
+        ss.setSpan(fcs, player.getPos().getCol() - 1, player.getPos().getCol(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        gameMap.getRow(player.getPos().getRow()).setText(ss);
     }
 
 }
