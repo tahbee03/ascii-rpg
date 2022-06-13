@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
         processColor();
         processFrame();
+        // player.getPos().getNeighbors();
     }
 
     public void moveRight(View v) {
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
         processColor();
         processFrame();
+        // player.getPos().getNeighbors();
     }
 
     public void moveUp(View v) {
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         gameMap.getRow(currRowNum).setText(currRow);
         processColor();
         processFrame();
+        // player.getPos().getNeighbors();
     }
 
     public void moveDown(View v) {
@@ -135,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         gameMap.getRow(currRowNum).setText(currRow);
         processColor();
         processFrame();
+        // player.getPos().getNeighbors();
     }
 
     private void processColor() {
