@@ -11,7 +11,10 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
 import com.asciirpg.entity.Player;
+import com.asciirpg.util.Clock;
 import com.asciirpg.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     // Data member(s)
     public Map gameMap;
     public Player player;
+    public Clock clock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         player = new Player();
         gameMap.draw(player, player.getPos());
         processColor();
+
+        // Initializes frame clock
+        clock = new Clock();
+        String s  = ((TextView) findViewById(R.id.currFrame)).getText().toString();
+        s = s.substring(0, 7) + String.valueOf(clock.getFrame());
+        ((TextView) findViewById(R.id.currFrame)).setText(s);
     }
 
     public void moveLeft(View v) {
@@ -55,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
         processColor();
+        processFrame();
     }
 
     public void moveRight(View v) {
@@ -73,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
         processColor();
-
+        processFrame();
     }
 
     public void moveUp(View v) {
@@ -98,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(currRowNum).setText(currRow);
         processColor();
+        processFrame();
     }
 
     public void moveDown(View v) {
@@ -122,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(currRowNum).setText(currRow);
         processColor();
+        processFrame();
     }
 
     private void processColor() {
@@ -132,6 +145,13 @@ public class MainActivity extends AppCompatActivity {
         ss.setSpan(fcs, player.getPos().getCol() - 1, player.getPos().getCol(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         gameMap.getRow(player.getPos().getRow()).setText(ss);
+    }
+
+    private void processFrame() {
+        clock.nextFrame();
+        String s  = ((TextView) findViewById(R.id.currFrame)).getText().toString();
+        s = s.substring(0, 7) + String.valueOf(clock.getFrame());
+        ((TextView) findViewById(R.id.currFrame)).setText(s);
     }
 
 }
