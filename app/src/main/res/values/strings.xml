@@ -6,5 +6,5 @@
     <string name="right_button_desc">moves char right</string>
     <string name="up_button_desc">moves char up</string>
     <string name="down_button_desc">moves char down</string>
-    <string name="current_frame">Frame: x</string>
+    <string name="hp">HP: x</string>
 </resources>

@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         player = new Player();
         gameMap.draw(player, player.getPos());
         processColor();
+        String s = ((TextView) findViewById(R.id.hp)).getText().toString();
+        s = s.substring(0, 4) + String.valueOf(player.getHP());
+        ((TextView) findViewById(R.id.hp)).setText(s);
 
         // Initializes frame clock
         clock = new Clock();
