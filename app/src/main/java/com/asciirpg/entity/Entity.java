@@ -2,8 +2,12 @@ package com.asciirpg.entity;
 
 import com.asciirpg.util.Position;
 
+/**
+ * Abstract class for basic entity properties.
+ */
 public abstract class Entity {
 
+    // Data member(s)
     protected char icon;
     protected int HP;
     protected Position pos;

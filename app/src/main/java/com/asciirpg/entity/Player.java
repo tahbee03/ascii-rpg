@@ -2,6 +2,9 @@ package com.asciirpg.entity;
 
 import com.asciirpg.util.Position;
 
+/**
+ * Class for player properties.
+ */
 public class Player extends Entity {
 
     // Default constructor
@@ -17,4 +20,5 @@ public class Player extends Entity {
         this.HP = HP;
         this.pos = pos;
     }
+
 }

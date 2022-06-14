@@ -1,12 +1,12 @@
 package com.asciirpg.util;
 
-import android.graphics.PostProcessor;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 
+/**
+ * Class used to describe the position of each cell in the game map
+ */
 public class Position {
 
     // Data members
@@ -25,7 +25,7 @@ public class Position {
         this.col = col;
     }
 
-    // Setters
+    // Setter(s)
     public void setRow(int r) {
         this.row = r;
     }
@@ -33,7 +33,7 @@ public class Position {
         this.col = c;
     }
 
-    // Getters
+    // Getter(s)
     public int getRow() {
         return this.row;
     }
@@ -41,16 +41,19 @@ public class Position {
         return this.col;
     }
 
+    // Position class string representation
     @NonNull
     @Override
     public String toString() {
         return "(" + String.valueOf(this.row) + ", " + String.valueOf(this.col) + ")";
     }
 
+    // Compares one Position object with another
     public boolean equals(Position p) {
         return (this.row == p.row && this.col == p.col);
     }
 
+    // Returns a list of valid Position neighbors in a 3x3 radius
     public ArrayList<Position> getNeighbors() {
         Log.d("CURRENT POSITION", this.toString());
         ArrayList<Position> posList = new ArrayList<>();

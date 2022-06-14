@@ -3,7 +3,6 @@
 package com.asciirpg.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -12,7 +11,6 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
 import com.asciirpg.entity.Player;
 import com.asciirpg.util.Clock;
 import com.asciirpg.util.Map;
@@ -146,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("FRAME", String.valueOf(clock.getFrame()));
     }
 
-    private void processColor() {
+    private void processColor() { // Gives color to player character
         String text = gameMap.getRow(player.getPos().getRow()).getText().toString();
 
         SpannableString ss = new SpannableString(text);
@@ -154,6 +152,14 @@ public class MainActivity extends AppCompatActivity {
         ss.setSpan(fcs, player.getPos().getCol() - 1, player.getPos().getCol(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         gameMap.getRow(player.getPos().getRow()).setText(ss);
+    }
+
+    public void intermission() {
+        /* TODO: Use to process data and actions between frames.
+        - call function after every player movement
+        - spawn items and enemies
+        - carry out enemy actions
+         */
     }
 
 }
