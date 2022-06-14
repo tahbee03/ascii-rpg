@@ -44,9 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initializes frame clock
         clock = new Clock();
-        String s  = ((TextView) findViewById(R.id.currFrame)).getText().toString();
-        s = s.substring(0, 7) + String.valueOf(clock.getFrame());
-        ((TextView) findViewById(R.id.currFrame)).setText(s);
+        Log.d("FRAME", String.valueOf(clock.getFrame()));
     }
 
     public void moveLeft(View v) {
@@ -65,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
         processColor();
-        processFrame();
-        // player.getPos().getNeighbors();
+
+        clock.nextFrame();
+        Log.d("FRAME", String.valueOf(clock.getFrame()));
     }
 
     public void moveRight(View v) {
@@ -85,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
         processColor();
-        processFrame();
-        // player.getPos().getNeighbors();
+
+        clock.nextFrame();
+        Log.d("FRAME", String.valueOf(clock.getFrame()));
     }
 
     public void moveUp(View v) {
@@ -111,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(currRowNum).setText(currRow);
         processColor();
-        processFrame();
-        // player.getPos().getNeighbors();
+
+        clock.nextFrame();
+        Log.d("FRAME", String.valueOf(clock.getFrame()));
     }
 
     public void moveDown(View v) {
@@ -137,8 +138,9 @@ public class MainActivity extends AppCompatActivity {
         }
         gameMap.getRow(currRowNum).setText(currRow);
         processColor();
-        processFrame();
-        // player.getPos().getNeighbors();
+
+        clock.nextFrame();
+        Log.d("FRAME", String.valueOf(clock.getFrame()));
     }
 
     private void processColor() {
@@ -149,13 +151,6 @@ public class MainActivity extends AppCompatActivity {
         ss.setSpan(fcs, player.getPos().getCol() - 1, player.getPos().getCol(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         gameMap.getRow(player.getPos().getRow()).setText(ss);
-    }
-
-    private void processFrame() {
-        clock.nextFrame();
-        String s  = ((TextView) findViewById(R.id.currFrame)).getText().toString();
-        s = s.substring(0, 7) + String.valueOf(clock.getFrame());
-        ((TextView) findViewById(R.id.currFrame)).setText(s);
     }
 
 }
