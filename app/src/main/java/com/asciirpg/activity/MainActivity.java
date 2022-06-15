@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         // Initializes player position
         player = new Player();
         gameMap.draw(player, player.getPos());
-        gameMap.processColor(player);
+        gameMap.processColor();
         String s = ((TextView) findViewById(R.id.hp)).getText().toString();
         s = s.substring(0, 4) + String.valueOf(player.getHP());
         ((TextView) findViewById(R.id.hp)).setText(s);
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
-        gameMap.processColor(player);
+        gameMap.processColor();
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
-        gameMap.processColor(player);
+        gameMap.processColor();
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
-        gameMap.processColor(player);
+        gameMap.processColor();
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
-        gameMap.processColor(player);
+        gameMap.processColor();
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             Enemy e = new Enemy(30, new Position(row, col));
             entities.add(e);
             gameMap.draw(e, e.getPos());
-            gameMap.processColor(e);
+            gameMap.processColor();
         }
     }
 
