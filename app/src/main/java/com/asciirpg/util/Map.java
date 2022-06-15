@@ -2,7 +2,12 @@ package com.asciirpg.util;
 
 import android.widget.TextView;
 import com.asciirpg.entity.Entity;
+import com.asciirpg.entity.Player;
 import java.util.ArrayList;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.graphics.Color;
 
 /**
  * Game map is created using "matrix" and Position class.
@@ -40,6 +45,21 @@ public class Map {
     // Returns the character at a specific position
     public char read(Position p) {
         return this.getRow(p.getRow()).getText().toString().charAt(p.getCol() - 1);
+    }
+
+    // Gives color to entities
+    public void processColor(Entity e) {
+        // TODO: Fix so that colors don't temporarily disappear
+        String text = this.getRow(e.getPos().getRow()).getText().toString();
+
+        // SOURCE: https://www.youtube.com/watch?v=tTLmz-JKxsI
+        SpannableString ss = new SpannableString(text);
+        ForegroundColorSpan fcs;
+        if(e instanceof Player) fcs = new ForegroundColorSpan(Color.BLUE);
+        else fcs = new ForegroundColorSpan(Color.RED);
+        ss.setSpan(fcs, e.getPos().getCol() - 1, e.getPos().getCol(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        this.getRow(e.getPos().getRow()).setText(ss);
     }
 
 }

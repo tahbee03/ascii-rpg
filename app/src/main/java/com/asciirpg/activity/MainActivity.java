@@ -3,17 +3,18 @@
 package com.asciirpg.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.asciirpg.entity.Enemy;
+import com.asciirpg.entity.Entity;
 import com.asciirpg.entity.Player;
 import com.asciirpg.util.Clock;
 import com.asciirpg.util.Map;
+import com.asciirpg.util.Position;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public Map gameMap;
     public Player player;
     public Clock clock;
+    public ArrayList<Entity> entities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         // Initializes player position
         player = new Player();
         gameMap.draw(player, player.getPos());
-        processColor();
+        gameMap.processColor(player);
         String s = ((TextView) findViewById(R.id.hp)).getText().toString();
         s = s.substring(0, 4) + String.valueOf(player.getHP());
         ((TextView) findViewById(R.id.hp)).setText(s);
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         // Initializes frame clock
         clock = new Clock();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
+
+        // Initializes entity list
+        entities = new ArrayList<>();
     }
 
     public void moveLeft(View v) {
@@ -63,10 +68,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
-        processColor();
+        gameMap.processColor(player);
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
+
+        intermission();
     }
 
     public void moveRight(View v) {
@@ -84,10 +91,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
-        processColor();
+        gameMap.processColor(player);
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
+
+        intermission();
     }
 
     public void moveUp(View v) {
@@ -111,10 +120,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
-        processColor();
+        gameMap.processColor(player);
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
+
+        intermission();
     }
 
     public void moveDown(View v) {
@@ -138,28 +149,35 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
-        processColor();
+        gameMap.processColor(player);
 
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
+
+        intermission();
     }
 
-    private void processColor() { // Gives color to player character
-        String text = gameMap.getRow(player.getPos().getRow()).getText().toString();
-
-        SpannableString ss = new SpannableString(text);
-        ForegroundColorSpan fcs = new ForegroundColorSpan(Color.RED);
-        ss.setSpan(fcs, player.getPos().getCol() - 1, player.getPos().getCol(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        gameMap.getRow(player.getPos().getRow()).setText(ss);
-    }
-
-    public void intermission() {
-        /* TODO: Use to process data and actions between frames.
+    private void intermission() {
+        /*
+        TODO: Use to process data and actions between frames.
         - call function after every player movement
         - spawn items and enemies
         - carry out enemy actions
          */
+
+        if(clock.getFrame() % 10 == 0) {
+            Random r = new Random();
+            int row;
+            int col;
+            do {
+                row = r.nextInt(5) + 1;
+                col = r.nextInt(5) + 1;
+            } while(row != player.getPos().getRow() && col != player.getPos().getCol());
+            Enemy e = new Enemy(30, new Position(row, col));
+            entities.add(e);
+            gameMap.draw(e, e.getPos());
+            gameMap.processColor(e);
+        }
     }
 
 }
