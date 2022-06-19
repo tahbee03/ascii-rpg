@@ -18,7 +18,6 @@ public abstract class Entity {
 
     // Data member(s)
     protected char icon;
-    // protected int HP;
     protected Position pos;
 
     // Setters
