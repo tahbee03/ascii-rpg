@@ -2,6 +2,9 @@ package com.asciirpg.entity;
 
 import com.asciirpg.util.Position;
 
+/**
+ * Class for detractor properties. Decreases player health if encountered.
+ */
 public class Detractor extends Entity{
 
     // Default constructor

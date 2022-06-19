@@ -60,7 +60,7 @@ public class Map {
         String text = rows.get(row).getText().toString();
         char c = text.charAt(col);
 
-        return c != '-'; // false -> position is occupied; true -> position is not occupied
+        return c != '-'; // true -> position is occupied; false -> position is not occupied
     }
 
     // Gives color to entities
@@ -80,18 +80,18 @@ public class Map {
                 switch(text.charAt(j)) {
                     case '@':
                         ss.setSpan(blue, j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
-                            + ", " + String.valueOf(j + 1) + ") to BLUE");
+                        // Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
+                        //     + ", " + String.valueOf(j + 1) + ") to BLUE");
                         break;
                     case '#':
                         ss.setSpan(red, j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
-                                + ", " + String.valueOf(j + 1) + ") to RED");
+                        // Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
+                        //        + ", " + String.valueOf(j + 1) + ") to RED");
                         break;
                     default:
                         ss.setSpan(black, j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
-                                + ", " + String.valueOf(j + 1) + ") to BLACK");
+                        // Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
+                        //         + ", " + String.valueOf(j + 1) + ") to BLACK");
                 }
             }
             rows.get(i).setText(ss);

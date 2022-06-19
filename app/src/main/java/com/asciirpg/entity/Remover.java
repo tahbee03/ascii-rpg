@@ -2,6 +2,9 @@ package com.asciirpg.entity;
 
 import com.asciirpg.util.Position;
 
+/**
+ * Class for remover properties. Increases map space if encountered.
+ */
 public class Remover extends Entity {
 
     // Default constructor

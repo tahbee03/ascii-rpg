@@ -8,12 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.asciirpg.entity.Blocker;
 import com.asciirpg.entity.Entity;
 import com.asciirpg.entity.Player;
 import com.asciirpg.util.Clock;
 import com.asciirpg.util.Map;
 import com.asciirpg.util.Position;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,11 +60,9 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getCol() == 1) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-            return;
         } else if(gameMap.getPosState(new Position(player.getPos().getRow(),player.getPos().getCol() - 1))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
-            return;
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
@@ -79,11 +79,9 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getCol() == 5) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-            return;
         } else if(gameMap.getPosState(new Position(player.getPos().getRow(),player.getPos().getCol() + 1))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
-            return;
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
@@ -100,11 +98,9 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getRow() == 1) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-            return;
         } else if(gameMap.getPosState(new Position(player.getPos().getRow() - 1, player.getPos().getCol()))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
-            return;
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
@@ -121,11 +117,9 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getRow() == 5) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-            return;
         } else if(gameMap.getPosState(new Position(player.getPos().getRow() + 1, player.getPos().getCol()))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
-            return;
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
@@ -144,25 +138,36 @@ public class MainActivity extends AppCompatActivity {
         - carry out enemy actions
          */
 
-        gameMap.processColor();
         clock.nextFrame();
-        Log.d("FRAME", String.valueOf(clock.getFrame()));
 
-        /*
         if(clock.getFrame() % 10 == 0) {
-            Random r = new Random();
+            Random numGen = new Random();
+            // int entityNum = numGen.nextInt(4) + 1;
+            int entityNum = 1;
             int row;
             int col;
             do {
-                row = r.nextInt(5) + 1;
-                col = r.nextInt(5) + 1;
-            } while(row != player.getPos().getRow() && col != player.getPos().getCol());
-            Enemy e = new Enemy(30, new Position(row, col));
-            entities.add(e);
-            gameMap.draw(e);
-            gameMap.processColor();
+                row = numGen.nextInt(5) + 1;
+                col = numGen.nextInt(5) + 1;
+            } while(row == player.getPos().getRow()
+                    && col == player.getPos().getCol()
+                    && !gameMap.getPosState(new Position(row, col)));
+
+            switch(entityNum) {
+                case 1:
+                    Log.d("SPAWN", "Spawning new blocker!");
+                    Blocker b = new Blocker(new Position(row, col));
+                    gameMap.draw(b);
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                    break;
+            }
         }
-         */
+
+        gameMap.processColor();
+        Log.d("FRAME", String.valueOf(clock.getFrame()));
     }
 
 }

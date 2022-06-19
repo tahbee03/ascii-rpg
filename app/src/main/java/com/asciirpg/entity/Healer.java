@@ -2,6 +2,9 @@ package com.asciirpg.entity;
 
 import com.asciirpg.util.Position;
 
+/**
+ * Class for healer properties. Increases player health if encountered.
+ */
 public class Healer extends Entity {
 
     // Default constructor

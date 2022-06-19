@@ -2,6 +2,9 @@ package com.asciirpg.entity;
 
 import com.asciirpg.util.Position;
 
+/**
+ * Class for blocker properties. Reduces map space.
+ */
 public class Blocker extends Entity {
 
     // Default constructor
