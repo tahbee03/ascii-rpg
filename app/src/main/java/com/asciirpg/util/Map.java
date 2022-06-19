@@ -16,6 +16,7 @@ import android.graphics.Color;
 public class Map {
 
     // TODO: Add boolean value that represents whether or not a position is occupied already
+    // (3 "maps" ?)
 
     // Data member(s)
     private ArrayList<TextView> rows;
@@ -35,19 +36,40 @@ public class Map {
         return rows.get(i - 1);
     }
 
-    // Instantiates entities onto map
-    public void draw(Entity e, Position p) {
-        String row_text = rows.get(p.getRow() - 1).getText().toString();
-        int col = p.getCol() - 1;
+    // Draws entities onto map
+    public void draw(Entity e) {
+        // TODO: Update so that function can be used to update any character on map
+        /*
+        String currRow = gameMap.getRow(player.getPos().getRow()).getText().toString();
+        int currColNum = player.getPos().getCol();
+        if(currColNum != 1) { // Checks if player is in the first column
+            currRow = currRow.substring(0, currColNum - 2)
+                    + player.getIcon()
+                    + "-"
+                    + currRow.substring(currColNum);
+            player.setPosition(player.getPos().getRow(), player.getPos().getCol() - 1);
+        } else {
+            Log.d("MOVEMENT", "Boundary reached!");
+        }
+        gameMap.getRow(player.getPos().getRow()).setText(currRow);
+        gameMap.processColor();
+         */
+        String row_text = rows.get(e.getPos().getRow() - 1).getText().toString();
+        int col = e.getPos().getCol() - 1;
         row_text = row_text.substring(0, col)
                     + e.getIcon()
                     + row_text.substring(col + 1);
-        rows.get(p.getRow() - 1).setText(row_text);
+        rows.get(e.getPos().getRow() - 1).setText(row_text);
+
     }
 
-    // Returns the character at a specific position
-    public char read(Position p) {
-        return this.getRow(p.getRow()).getText().toString().charAt(p.getCol() - 1);
+    public boolean getPosState(Position p) {
+        int row = p.getRow() - 1;
+        int col = p.getCol() - 1;
+        String text = rows.get(row).getText().toString();
+        char c = text.charAt(col);
+
+        return c != '-'; // false -> position is occupied; true -> position is not occupied
     }
 
     // Gives color to entities

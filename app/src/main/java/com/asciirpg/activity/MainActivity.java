@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initializes player position
         player = new Player();
-        gameMap.draw(player, player.getPos());
+        gameMap.draw(player);
         gameMap.processColor();
         String s = ((TextView) findViewById(R.id.hp)).getText().toString();
         s = s.substring(0, 4) + String.valueOf(player.getHP());
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void intermission() {
         /*
-        TODO: Use to process data and actions between frames.
+        TODO: Use to process data and actions between frames
         - call function after every player movement
         - spawn items and enemies
         - carry out enemy actions
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
             } while(row != player.getPos().getRow() && col != player.getPos().getCol());
             Enemy e = new Enemy(30, new Position(row, col));
             entities.add(e);
-            gameMap.draw(e, e.getPos());
+            gameMap.draw(e);
             gameMap.processColor();
         }
     }

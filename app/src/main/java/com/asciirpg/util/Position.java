@@ -12,6 +12,7 @@ public class Position {
     // Data members
     private int row;
     private int col;
+    // private boolean state;
 
     // Default constructor
     public Position() {
