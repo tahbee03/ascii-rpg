@@ -9,11 +9,11 @@ public abstract class Entity {
 
     /*
     TYPES:
-    - player (@)
-    - blocker (#)
-    - remover (+)
-    - healer (*)
-    - detractor (%)
+    - player (@, blue)
+    - blocker (#, red)
+    - remover (+, green)
+    - healer (*, yellow)
+    - detractor (%, brown)
      */
 
     // Data member(s)

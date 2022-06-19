@@ -160,8 +160,11 @@ public class MainActivity extends AppCompatActivity {
                     gameMap.draw(b);
                     break;
                 case 2:
+                    // TODO: Add Remover spawn
                 case 3:
+                    // TODO: Add Detractor spawn
                 case 4:
+                    // TODO: Add Healer spawn
                     break;
             }
         }
