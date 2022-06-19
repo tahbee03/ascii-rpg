@@ -71,31 +71,11 @@ public class MainActivity extends AppCompatActivity {
             gameMap.draw(player);
         }
 
-        gameMap.processColor();
-        clock.nextFrame();
-        Log.d("FRAME", String.valueOf(clock.getFrame()));
-
         intermission();
     }
 
     public void moveRight(View v) {
         Log.d("MOVEMENT", "Moving right...");
-
-        /*
-        String currRow = gameMap.getRow(player.getPos().getRow()).getText().toString();
-        int currColNum = player.getPos().getCol();
-        if(currColNum != 5) { // Checks if player is in the last column
-            currRow = currRow.substring(0, currColNum - 1)
-                    + "-"
-                    + player.getIcon()
-                    + currRow.substring(currColNum + 1);
-            player.setPosition(player.getPos().getRow(), player.getPos().getCol() + 1);
-        } else {
-            Log.d("MOVEMENT", "Boundary reached!");
-        }
-        gameMap.getRow(player.getPos().getRow()).setText(currRow);
-
-         */
 
         if(player.getPos().getCol() == 5) {
             // Player attempting to exceed map bounds
@@ -111,10 +91,6 @@ public class MainActivity extends AppCompatActivity {
             player.setPosition(player.getPos().getRow(),player.getPos().getCol() + 1);
             gameMap.draw(player);
         }
-
-        gameMap.processColor();
-        clock.nextFrame();
-        Log.d("FRAME", String.valueOf(clock.getFrame()));
 
         intermission();
     }
@@ -140,10 +116,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
-        gameMap.processColor();
-
-        clock.nextFrame();
-        Log.d("FRAME", String.valueOf(clock.getFrame()));
 
         intermission();
     }
@@ -169,10 +141,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(currRowNum).setText(currRow);
-        gameMap.processColor();
-
-        clock.nextFrame();
-        Log.d("FRAME", String.valueOf(clock.getFrame()));
 
         intermission();
     }
@@ -184,6 +152,10 @@ public class MainActivity extends AppCompatActivity {
         - spawn items and enemies
         - carry out enemy actions
          */
+
+        gameMap.processColor();
+        clock.nextFrame();
+        Log.d("FRAME", String.valueOf(clock.getFrame()));
 
         if(clock.getFrame() % 10 == 0) {
             Random r = new Random();
