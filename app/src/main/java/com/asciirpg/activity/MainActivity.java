@@ -98,24 +98,20 @@ public class MainActivity extends AppCompatActivity {
     public void moveUp(View v) {
         Log.d("MOVEMENT", "Moving up...");
 
-        int currRowNum = player.getPos().getRow();
-        String currRow = gameMap.getRow(currRowNum).getText().toString();
-        String nextRow;
-        if(!currRow.equals(gameMap.getRow(1).getText().toString())) { // Checks if player is in the first row
-            nextRow = gameMap.getRow(currRowNum - 1).getText().toString();
-            int currColNum = player.getPos().getCol();
-            nextRow = nextRow.substring(0, currColNum - 1)
-                    + player.getIcon()
-                    + nextRow.substring(currColNum);
-            currRow = currRow.substring(0, currColNum - 1)
-                    + "-"
-                    + currRow.substring(currColNum);
-            gameMap.getRow(currRowNum - 1).setText(nextRow);
-            player.setPosition(currRowNum - 1, player.getPos().getCol());
-        } else {
+        if(player.getPos().getRow() == 1) {
+            // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
+            return;
+        } else if(gameMap.getPosState(new Position(player.getPos().getRow() - 1,player.getPos().getCol()))) {
+            // Player attempting to enter a position that is occupied by another entity
+            Log.d("MOVEMENT", "Obstacle encountered!");
+            return;
+        } else {
+            // Valid movement
+            gameMap.draw('-', player.getPos());
+            player.setPosition(player.getPos().getRow() - 1,player.getPos().getCol());
+            gameMap.draw(player);
         }
-        gameMap.getRow(currRowNum).setText(currRow);
 
         intermission();
     }
