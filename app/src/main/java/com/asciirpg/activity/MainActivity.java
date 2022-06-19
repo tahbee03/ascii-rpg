@@ -102,14 +102,14 @@ public class MainActivity extends AppCompatActivity {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
             return;
-        } else if(gameMap.getPosState(new Position(player.getPos().getRow() - 1,player.getPos().getCol()))) {
+        } else if(gameMap.getPosState(new Position(player.getPos().getRow() - 1, player.getPos().getCol()))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
             return;
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
-            player.setPosition(player.getPos().getRow() - 1,player.getPos().getCol());
+            player.setPosition(player.getPos().getRow() - 1, player.getPos().getCol());
             gameMap.draw(player);
         }
 
@@ -119,24 +119,20 @@ public class MainActivity extends AppCompatActivity {
     public void moveDown(View v) {
         Log.d("MOVEMENT", "Moving down...");
 
-        int currRowNum = player.getPos().getRow();
-        String currRow = gameMap.getRow(currRowNum).getText().toString();
-        String nextRow;
-        if(!currRow.equals(gameMap.getRow(5).getText().toString())) { // Checks if the player is in the last row
-            nextRow = gameMap.getRow(currRowNum + 1).getText().toString();
-            int currColNum = player.getPos().getCol();
-            nextRow = nextRow.substring(0, currColNum - 1)
-                    + "@"
-                    + nextRow.substring(currColNum);
-            currRow = currRow.substring(0, currColNum - 1)
-                    + "-"
-                    + currRow.substring(currColNum);
-            gameMap.getRow(currRowNum + 1).setText(nextRow);
-            player.setPosition(currRowNum + 1, player.getPos().getCol());
-        } else {
+        if(player.getPos().getRow() == 5) {
+            // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
+            return;
+        } else if(gameMap.getPosState(new Position(player.getPos().getRow() + 1, player.getPos().getCol()))) {
+            // Player attempting to enter a position that is occupied by another entity
+            Log.d("MOVEMENT", "Obstacle encountered!");
+            return;
+        } else {
+            // Valid movement
+            gameMap.draw('-', player.getPos());
+            player.setPosition(player.getPos().getRow() + 1, player.getPos().getCol());
+            gameMap.draw(player);
         }
-        gameMap.getRow(currRowNum).setText(currRow);
 
         intermission();
     }
