@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Obstacle encountered!");
             return;
         } else {
+            // Valid movement
             gameMap.draw('-', player.getPos());
             player.setPosition(player.getPos().getRow(),player.getPos().getCol() - 1);
             gameMap.draw(player);
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     public void moveRight(View v) {
         Log.d("MOVEMENT", "Moving right...");
 
+        /*
         String currRow = gameMap.getRow(player.getPos().getRow()).getText().toString();
         int currColNum = player.getPos().getCol();
         if(currColNum != 5) { // Checks if player is in the last column
@@ -92,8 +94,25 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MOVEMENT", "Boundary reached!");
         }
         gameMap.getRow(player.getPos().getRow()).setText(currRow);
-        gameMap.processColor();
 
+         */
+
+        if(player.getPos().getCol() == 5) {
+            // Player attempting to exceed map bounds
+            Log.d("MOVEMENT", "Boundary reached!");
+            return;
+        } else if(gameMap.getPosState(new Position(player.getPos().getRow(),player.getPos().getCol() + 1))) {
+            // Player attempting to enter a position that is occupied by another entity
+            Log.d("MOVEMENT", "Obstacle encountered!");
+            return;
+        } else {
+            // Valid movement
+            gameMap.draw('-', player.getPos());
+            player.setPosition(player.getPos().getRow(),player.getPos().getCol() + 1);
+            gameMap.draw(player);
+        }
+
+        gameMap.processColor();
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
 

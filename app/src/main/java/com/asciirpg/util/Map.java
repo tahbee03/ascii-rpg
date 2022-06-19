@@ -15,11 +15,8 @@ import android.graphics.Color;
  */
 public class Map {
 
-    // TODO: Add boolean value that represents whether or not a position is occupied already
-    // (3 "maps" ?)
-
     // Data member(s)
-    private ArrayList<TextView> rows;
+    private final ArrayList<TextView> rows;
 
     // Default constructor
     public Map() {
