@@ -7,17 +7,23 @@ import com.asciirpg.util.Position;
  */
 public abstract class Entity {
 
+    /*
+    TYPES:
+    - player (@)
+    - blocker (#)
+    - remover (+)
+    - healer (*)
+    - detractor (%)
+     */
+
     // Data member(s)
     protected char icon;
-    protected int HP;
+    // protected int HP;
     protected Position pos;
 
     // Setters
     public void setIcon(char c) {
         this.icon = c;
-    }
-    public void setHP(int h) {
-        this.HP = h;
     }
     public void setPosition(Position p) {
         this.pos = p;
@@ -30,9 +36,6 @@ public abstract class Entity {
     // Getters
     public char getIcon() {
         return this.icon;
-    }
-    public int getHP() {
-        return this.HP;
     }
     public Position getPos() {
         return this.pos;

@@ -7,6 +7,9 @@ import com.asciirpg.util.Position;
  */
 public class Player extends Entity {
 
+    // Data member(s)
+    protected int HP;
+
     // Default constructor
     public Player() {
         this.icon = '@';
@@ -19,6 +22,16 @@ public class Player extends Entity {
         this.icon = '@';
         this.HP = HP;
         this.pos = pos;
+    }
+
+    // Setter(s)
+    public void setHP(int h) {
+        this.HP = h;
+    }
+
+    // Getter(s)
+    public int getHP() {
+        return this.HP;
     }
 
 }

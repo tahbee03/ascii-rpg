@@ -65,19 +65,10 @@ public class Map {
 
     // Gives color to entities
     public void processColor() {
-        // TODO: Fix so that colors don't temporarily disappear
-        /*
-        String text = this.getRow(e.getPos().getRow()).getText().toString();
-
         // SOURCE: https://www.youtube.com/watch?v=tTLmz-JKxsI
-        SpannableString ss = new SpannableString(text);
-        ForegroundColorSpan fcs;
-        if(e instanceof Player) fcs = new ForegroundColorSpan(Color.BLUE);
-        else fcs = new ForegroundColorSpan(Color.RED);
-        ss.setSpan(fcs, e.getPos().getCol() - 1, e.getPos().getCol(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        this.getRow(e.getPos().getRow()).setText(ss);
-         */
+        // TODO: Fix so that colors don't temporarily disappear
+
         ForegroundColorSpan blue = new ForegroundColorSpan(Color.BLUE);
         ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
         ForegroundColorSpan black = new ForegroundColorSpan(Color.BLACK);

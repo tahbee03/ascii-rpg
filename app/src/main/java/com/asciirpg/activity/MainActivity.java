@@ -7,14 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import com.asciirpg.entity.Enemy;
+
 import com.asciirpg.entity.Entity;
 import com.asciirpg.entity.Player;
 import com.asciirpg.util.Clock;
 import com.asciirpg.util.Map;
 import com.asciirpg.util.Position;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -149,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
 
+        /*
         if(clock.getFrame() % 10 == 0) {
             Random r = new Random();
             int row;
@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
             gameMap.draw(e);
             gameMap.processColor();
         }
+         */
     }
 
 }
