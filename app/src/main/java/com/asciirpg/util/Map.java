@@ -36,33 +36,27 @@ public class Map {
         return rows.get(i - 1);
     }
 
-    // Draws entities onto map
-    public void draw(Entity e) {
-        // TODO: Update so that function can be used to update any character on map
-        /*
-        String currRow = gameMap.getRow(player.getPos().getRow()).getText().toString();
-        int currColNum = player.getPos().getCol();
-        if(currColNum != 1) { // Checks if player is in the first column
-            currRow = currRow.substring(0, currColNum - 2)
-                    + player.getIcon()
-                    + "-"
-                    + currRow.substring(currColNum);
-            player.setPosition(player.getPos().getRow(), player.getPos().getCol() - 1);
-        } else {
-            Log.d("MOVEMENT", "Boundary reached!");
-        }
-        gameMap.getRow(player.getPos().getRow()).setText(currRow);
-        gameMap.processColor();
-         */
-        String row_text = rows.get(e.getPos().getRow() - 1).getText().toString();
-        int col = e.getPos().getCol() - 1;
-        row_text = row_text.substring(0, col)
-                    + e.getIcon()
-                    + row_text.substring(col + 1);
-        rows.get(e.getPos().getRow() - 1).setText(row_text);
-
+    // Draws '-' onto map
+    public void draw(char c, Position p) {
+        String currRow = rows.get(p.getRow() - 1).getText().toString();
+        int currColNum = p.getCol() - 1;
+        currRow = currRow.substring(0, currColNum)
+                + c
+                + currRow.substring(currColNum + 1);
+        rows.get(p.getRow() - 1).setText(currRow);
     }
 
+    // Draws entities onto map
+    public void draw(Entity e) {
+        String currRow = rows.get(e.getPos().getRow() - 1).getText().toString();
+        int currColNum = e.getPos().getCol() - 1;
+        currRow = currRow.substring(0, currColNum)
+                + e.getIcon()
+                + currRow.substring(currColNum + 1);
+        rows.get(e.getPos().getRow() - 1).setText(currRow);
+    }
+
+    // Determines whether an entity is at the given position or not
     public boolean getPosState(Position p) {
         int row = p.getRow() - 1;
         int col = p.getCol() - 1;

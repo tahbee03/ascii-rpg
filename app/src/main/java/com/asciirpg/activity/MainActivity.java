@@ -56,20 +56,21 @@ public class MainActivity extends AppCompatActivity {
     public void moveLeft(View v) {
         Log.d("MOVEMENT", "Moving left...");
 
-        String currRow = gameMap.getRow(player.getPos().getRow()).getText().toString();
-        int currColNum = player.getPos().getCol();
-        if(currColNum != 1) { // Checks if player is in the first column
-            currRow = currRow.substring(0, currColNum - 2)
-                    + player.getIcon()
-                    + "-"
-                    + currRow.substring(currColNum);
-            player.setPosition(player.getPos().getRow(), player.getPos().getCol() - 1);
-        } else {
+        if(player.getPos().getCol() == 1) {
+            // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
+            return;
+        } else if(gameMap.getPosState(new Position(player.getPos().getRow(),player.getPos().getCol() - 1))) {
+            // Player attempting to enter a position that is occupied by another entity
+            Log.d("MOVEMENT", "Obstacle encountered!");
+            return;
+        } else {
+            gameMap.draw('-', player.getPos());
+            player.setPosition(player.getPos().getRow(),player.getPos().getCol() - 1);
+            gameMap.draw(player);
         }
-        gameMap.getRow(player.getPos().getRow()).setText(currRow);
-        gameMap.processColor();
 
+        gameMap.processColor();
         clock.nextFrame();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
 
