@@ -3,6 +3,8 @@
 package com.asciirpg.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -144,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
         String s = ((TextView) findViewById(R.id.hp)).getText().toString();
         s = s.substring(0, 4) + String.valueOf(player.getHP());
         ((TextView) findViewById(R.id.hp)).setText(s);
+
+        if(player.getHP() <= 0) startActivity(new Intent(MainActivity.this, GameOver.class));
 
         if(clock.getFrame() % 10 == 0) {
             Random numGen = new Random();

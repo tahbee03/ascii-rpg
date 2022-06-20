@@ -13,7 +13,7 @@
         android:fontFamily="@font/inconsolata"
         android:text="@string/start_text"
         android:textColor="#ffffff"
-        android:textSize="50sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

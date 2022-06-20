@@ -8,4 +8,6 @@
     <string name="down_button_desc">moves char down</string>
     <string name="hp">HP: x</string>
     <string name="start_text">START</string>
+    <string name="game_over_text">GAME\nOVER</string>
+    <string name="restart_text">RESTART</string>
 </resources>

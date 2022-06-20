@@ -7,20 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Start extends AppCompatActivity {
+public class GameOver extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_game_over);
 
-        Button b = (Button) findViewById(R.id.start_button);
+        Button b = (Button) findViewById(R.id.restart_button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Start.this, MainActivity.class));
+                startActivity(new Intent(GameOver.this, MainActivity.class));
             }
         });
     }
-
 }
