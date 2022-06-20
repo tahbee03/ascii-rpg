@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public Map gameMap;
     public Player player;
     public Clock clock;
-    public ArrayList<Entity> entities;
+    public ArrayList<Entity> entities; // TODO: Remove
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +40,16 @@ public class MainActivity extends AppCompatActivity {
         gameMap.pushRow(findViewById(R.id.row4));
         gameMap.pushRow(findViewById(R.id.row5));
 
-        // Initializes player position
+        // Initializes player
         player = new Player();
         gameMap.draw(player);
         gameMap.processColor();
         String s = ((TextView) findViewById(R.id.hp)).getText().toString();
         s = s.substring(0, 4) + String.valueOf(player.getHP());
         ((TextView) findViewById(R.id.hp)).setText(s);
+        s = ((TextView) findViewById(R.id.score)).getText().toString();
+        s = s.substring(0, 7) + String.valueOf(player.getScore());
+        ((TextView) findViewById(R.id.score)).setText(s);
 
         // Initializes frame clock
         clock = new Clock();
@@ -68,7 +71,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
+            player.storePos();
             player.setPosition(player.getPos().getRow(),player.getPos().getCol() - 1);
+            Log.d("PREV POS", player.getPrevPos().toString());
+            Log.d("POS", player.getPos().toString());
+            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
+            String s = ((TextView) findViewById(R.id.score)).getText().toString();
+            s = s.substring(0, 7) + String.valueOf(player.getScore());
+            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
         }
 
@@ -87,7 +97,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
+            player.storePos();
             player.setPosition(player.getPos().getRow(),player.getPos().getCol() + 1);
+            Log.d("PREV POS", player.getPrevPos().toString());
+            Log.d("POS", player.getPos().toString());
+            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
+            String s = ((TextView) findViewById(R.id.score)).getText().toString();
+            s = s.substring(0, 7) + String.valueOf(player.getScore());
+            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
         }
 
@@ -106,7 +123,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
+            player.storePos();
             player.setPosition(player.getPos().getRow() - 1, player.getPos().getCol());
+            Log.d("PREV POS", player.getPrevPos().toString());
+            Log.d("POS", player.getPos().toString());
+            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
+            String s = ((TextView) findViewById(R.id.score)).getText().toString();
+            s = s.substring(0, 7) + String.valueOf(player.getScore());
+            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
         }
 
@@ -125,7 +149,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
+            player.storePos();
             player.setPosition(player.getPos().getRow() + 1, player.getPos().getCol());
+            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
+            Log.d("PREV POS", player.getPrevPos().toString());
+            Log.d("POS", player.getPos().toString());
+            String s = ((TextView) findViewById(R.id.score)).getText().toString();
+            s = s.substring(0, 7) + String.valueOf(player.getScore());
+            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
         }
 

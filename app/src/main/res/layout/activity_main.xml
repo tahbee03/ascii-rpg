@@ -10,13 +10,26 @@
         android:id="@+id/hp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/inconsolata"
         android:text="@string/hp"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="80dp"
+        android:fontFamily="@font/inconsolata"
+        android:text="@string/score"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
