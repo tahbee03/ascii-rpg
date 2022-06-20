@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ASCII RPG Android</string>
+    <string name="app_name">ASCII RPG</string>
     <string name="startingRow">--@--</string>
     <string name="emptyRow">-----</string>
     <string name="left_button_desc">moves char left</string>
