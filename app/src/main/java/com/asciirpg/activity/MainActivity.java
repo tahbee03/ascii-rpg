@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getCol() == 1) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.getPosState(new Position(player.getPos().getRow(),player.getPos().getCol() - 1))) {
+        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow(),player.getPos().getCol() - 1))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
         } else {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getCol() == 5) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.getPosState(new Position(player.getPos().getRow(),player.getPos().getCol() + 1))) {
+        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow(),player.getPos().getCol() + 1))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
         } else {
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getRow() == 1) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.getPosState(new Position(player.getPos().getRow() - 1, player.getPos().getCol()))) {
+        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow() - 1, player.getPos().getCol()))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
         } else {
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         if(player.getPos().getRow() == 5) {
             // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.getPosState(new Position(player.getPos().getRow() + 1, player.getPos().getCol()))) {
+        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow() + 1, player.getPos().getCol()))) {
             // Player attempting to enter a position that is occupied by another entity
             Log.d("MOVEMENT", "Obstacle encountered!");
         } else {
@@ -153,19 +153,15 @@ public class MainActivity extends AppCompatActivity {
             Random numGen = new Random();
             // int entityNum = numGen.nextInt(4) + 1;
             int entityNum = 1;
-            int row;
-            int col;
+            Position p;
             do {
-                row = numGen.nextInt(5) + 1;
-                col = numGen.nextInt(5) + 1;
-            } while(row == player.getPos().getRow()
-                    && col == player.getPos().getCol()
-                    && !gameMap.getPosState(new Position(row, col)));
+                p = new Position(numGen.nextInt(5) + 1, numGen.nextInt(5) + 1);
+            } while(gameMap.occupiedPos(p));
 
             switch(entityNum) {
                 case 1:
                     Log.d("SPAWN", "Spawning new blocker!");
-                    Blocker b = new Blocker(new Position(row, col));
+                    Blocker b = new Blocker(p);
                     gameMap.draw(b);
                     break;
                 case 2:

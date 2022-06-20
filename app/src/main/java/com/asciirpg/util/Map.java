@@ -54,7 +54,7 @@ public class Map {
     }
 
     // Determines whether an entity is at the given position or not
-    public boolean getPosState(Position p) {
+    public boolean occupiedPos(Position p) {
         int row = p.getRow() - 1;
         int col = p.getCol() - 1;
         String text = rows.get(row).getText().toString();
@@ -65,23 +65,7 @@ public class Map {
 
     // Gives color to entities
     public void processColor() {
-        // SOURCE: https://www.youtube.com/watch?v=tTLmz-JKxsI
-
-        // TODO: Fix so that colors don't temporarily disappear
-
-        // NOTE: Apparently FCSs can't be reused for other characters in the same string
-        // ForegroundColorSpan blue = new ForegroundColorSpan(Color.BLUE);
-        // ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
-        // ForegroundColorSpan black = new ForegroundColorSpan(Color.BLACK);
-
-        /*
-        TYPES:
-        - player (@, blue)
-        - blocker (#, red)
-        - remover (+, green)
-        - healer (*, yellow)
-        - detractor (%, brown)
-        */
+        // BASED ON: https://www.youtube.com/watch?v=tTLmz-JKxsI
 
         for(int i = 0; i < this.rows.size(); i++) { // Iterates through every row of text
             String text = rows.get(i).getText().toString();
