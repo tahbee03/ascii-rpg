@@ -69,9 +69,19 @@ public class Map {
 
         // TODO: Fix so that colors don't temporarily disappear
 
-        ForegroundColorSpan blue = new ForegroundColorSpan(Color.BLUE);
-        ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
-        ForegroundColorSpan black = new ForegroundColorSpan(Color.BLACK);
+        // NOTE: Apparently FCSs can't be reused for other characters in the same string
+        // ForegroundColorSpan blue = new ForegroundColorSpan(Color.BLUE);
+        // ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
+        // ForegroundColorSpan black = new ForegroundColorSpan(Color.BLACK);
+
+        /*
+        TYPES:
+        - player (@, blue)
+        - blocker (#, red)
+        - remover (+, green)
+        - healer (*, yellow)
+        - detractor (%, brown)
+        */
 
         for(int i = 0; i < this.rows.size(); i++) { // Iterates through every row of text
             String text = rows.get(i).getText().toString();
@@ -79,19 +89,22 @@ public class Map {
             for(int j = 0; j < text.length(); j++) { // Iterates through every character in each row
                 switch(text.charAt(j)) {
                     case '@':
-                        ss.setSpan(blue, j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        // Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
-                        //     + ", " + String.valueOf(j + 1) + ") to BLUE");
+                        ss.setSpan(new ForegroundColorSpan(Color.BLUE), j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         break;
                     case '#':
-                        ss.setSpan(red, j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        // Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
-                        //        + ", " + String.valueOf(j + 1) + ") to RED");
+                        ss.setSpan(new ForegroundColorSpan(Color.RED), j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        break;
+                    case '+':
+                        ss.setSpan(new ForegroundColorSpan(Color.GREEN), j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        break;
+                    case '*':
+                        ss.setSpan(new ForegroundColorSpan(Color.YELLOW), j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        break;
+                    case '%':
+                        ss.setSpan(new ForegroundColorSpan(Color.rgb(159, 121, 83)), j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         break;
                     default:
-                        ss.setSpan(black, j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        // Log.d("processColor()", "Setting (" + String.valueOf(i + 1)
-                        //         + ", " + String.valueOf(j + 1) + ") to BLACK");
+                        ss.setSpan(new ForegroundColorSpan(Color.BLACK), j, j + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }
             rows.get(i).setText(ss);
