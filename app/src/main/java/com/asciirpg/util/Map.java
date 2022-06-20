@@ -53,14 +53,19 @@ public class Map {
         rows.get(e.getPos().getRow() - 1).setText(currRow);
     }
 
+    // Returns the character at the given position
+    private char readPos(Position p) {
+        return rows.get(p.getRow() - 1).getText().toString().charAt(p.getCol() - 1);
+    }
+
     // Determines whether an entity is at the given position or not
     public boolean occupiedPos(Position p) {
-        int row = p.getRow() - 1;
-        int col = p.getCol() - 1;
-        String text = rows.get(row).getText().toString();
-        char c = text.charAt(col);
+        return readPos(p) != '-'; // true -> position is occupied; false -> position is not occupied
+    }
 
-        return c != '-'; // true -> position is occupied; false -> position is not occupied
+    // Determines whether an entity can be "stepped on" or not
+    public boolean isPassable(Position p) {
+        return readPos(p) != '#';
     }
 
     // Gives color to entities
