@@ -140,6 +140,11 @@ public class MainActivity extends AppCompatActivity {
 
         clock.nextFrame();
 
+        player.setHP(player.getHP() - 1);
+        String s = ((TextView) findViewById(R.id.hp)).getText().toString();
+        s = s.substring(0, 4) + String.valueOf(player.getHP());
+        ((TextView) findViewById(R.id.hp)).setText(s);
+
         if(clock.getFrame() % 10 == 0) {
             Random numGen = new Random();
             // int entityNum = numGen.nextInt(4) + 1;

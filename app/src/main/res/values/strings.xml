@@ -7,4 +7,5 @@
     <string name="up_button_desc">moves char up</string>
     <string name="down_button_desc">moves char down</string>
     <string name="hp">HP: x</string>
+    <string name="start_text">START</string>
 </resources>
