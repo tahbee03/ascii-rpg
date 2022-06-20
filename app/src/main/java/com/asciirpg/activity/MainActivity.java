@@ -19,6 +19,12 @@ import com.asciirpg.util.Position;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+TODO (Suggestions)
+- add sounds
+- change button colors
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     // Data member(s)
@@ -178,7 +184,11 @@ public class MainActivity extends AppCompatActivity {
         s = s.substring(0, 4) + String.valueOf(player.getHP());
         ((TextView) findViewById(R.id.hp)).setText(s);
 
-        if(player.getHP() <= 0) startActivity(new Intent(MainActivity.this, GameOver.class));
+        if(player.getHP() <= 0) {
+            Intent i = new Intent(MainActivity.this, GameOver.class);
+            i.putExtra("score", player.getScore());
+            startActivity(i);
+        }
 
         if(clock.getFrame() % 10 == 0) {
             Random numGen = new Random();
