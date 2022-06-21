@@ -54,18 +54,35 @@ public class Map {
     }
 
     // Returns the character at the given position
-    private char readPos(Position p) {
+    public char readPos(Position p) {
         return rows.get(p.getRow() - 1).getText().toString().charAt(p.getCol() - 1);
     }
 
     // Determines whether an entity is at the given position or not
-    public boolean occupiedPos(Position p) {
+    public boolean isOccupied(Position p) {
         return readPos(p) != '-'; // true -> position is occupied; false -> position is not occupied
     }
 
     // Determines whether an entity can be "stepped on" or not
     public boolean isPassable(Position p) {
         return readPos(p) != '#';
+    }
+
+    public void applyEffect(Player p, char c) {
+        switch(c) {
+            case '+':
+                // TODO: Implement Remover effect
+                Log.d("EFFECT", "Encountered Remover!");
+                break;
+            case '*':
+                Log.d("EFFECT", "Encountered Healer!");
+                p.setHP(p.getHP() + 6);
+                break;
+            case '%':
+                Log.d("EFFECT", "Encountered Remover!");
+                p.setHP(p.getHP() - 9);
+                break;
+        }
     }
 
     // Gives color to entities

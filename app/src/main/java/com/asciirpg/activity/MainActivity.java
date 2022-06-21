@@ -12,14 +12,13 @@ import android.widget.TextView;
 
 import com.asciirpg.entity.Blocker;
 import com.asciirpg.entity.Detractor;
-import com.asciirpg.entity.Entity;
 import com.asciirpg.entity.Healer;
 import com.asciirpg.entity.Player;
 import com.asciirpg.entity.Remover;
 import com.asciirpg.util.Clock;
 import com.asciirpg.util.Map;
 import com.asciirpg.util.Position;
-import java.util.ArrayList;
+
 import java.util.Random;
 
 /*
@@ -28,6 +27,8 @@ TODO (Suggestions)
 - change button colors
 - add a key so people know what each entity does
 - remove "header"
+- combine Blocker, Detractor, Healer, and Remover classes for simplicity
+  OR find a way to get an Entity class from a char
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         player = new Player();
         gameMap.draw(player);
         gameMap.processColor();
-        // TODO: Clean up code by putting HP and score updates in separate functions
         updateHP();
         updateScore();
 
@@ -66,16 +66,16 @@ public class MainActivity extends AppCompatActivity {
     public void moveLeft(View v) {
         Log.d("MOVEMENT", "Moving left...");
 
-        if(player.getPos().getCol() == 1) {
-            // Player attempting to exceed map bounds
+        Position nextPos = new Position(player.getPos().getRow(),player.getPos().getCol() - 1);
+
+        if(player.getPos().getCol() == 1) { // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow(),player.getPos().getCol() - 1))) {
-            // Player attempting to enter a position that is occupied by another entity
-            Log.d("MOVEMENT", "Obstacle encountered!");
-        } else {
-            // Valid movement
+        } else if(!gameMap.isPassable(nextPos)) { // Player attempting to enter a position that is occupied by a Blocker
+            Log.d("MOVEMENT", "Encountered Blocker!");
+        } else { // Valid movement
+            if(gameMap.isOccupied(nextPos)) gameMap.applyEffect(player, gameMap.readPos(nextPos));
             gameMap.draw('-', player.getPos());
-            player.setPosition(player.getPos().getRow(),player.getPos().getCol() - 1);
+            player.setPosition(nextPos);
             gameMap.draw(player);
             player.setScore(player.getScore() + 1);
             updateScore();
@@ -87,16 +87,16 @@ public class MainActivity extends AppCompatActivity {
     public void moveRight(View v) {
         Log.d("MOVEMENT", "Moving right...");
 
-        if(player.getPos().getCol() == 5) {
-            // Player attempting to exceed map bounds
+        Position nextPos = new Position(player.getPos().getRow(),player.getPos().getCol() + 1);
+
+        if(player.getPos().getCol() == 5) { // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow(),player.getPos().getCol() + 1))) {
-            // Player attempting to enter a position that is occupied by another entity
-            Log.d("MOVEMENT", "Obstacle encountered!");
-        } else {
-            // Valid movement
+        } else if(!gameMap.isPassable(nextPos)) { // Player attempting to enter a position that is occupied by a Blocker
+            Log.d("MOVEMENT", "Encountered Blocker!");
+        } else { // Valid movement
+            if(gameMap.isOccupied(nextPos)) gameMap.applyEffect(player, gameMap.readPos(nextPos));
             gameMap.draw('-', player.getPos());
-            player.setPosition(player.getPos().getRow(),player.getPos().getCol() + 1);
+            player.setPosition(nextPos);
             gameMap.draw(player);
             player.setScore(player.getScore() + 1);
             updateScore();
@@ -108,16 +108,16 @@ public class MainActivity extends AppCompatActivity {
     public void moveUp(View v) {
         Log.d("MOVEMENT", "Moving up...");
 
-        if(player.getPos().getRow() == 1) {
-            // Player attempting to exceed map bounds
+        Position nextPos = new Position(player.getPos().getRow() - 1, player.getPos().getCol());
+
+        if(player.getPos().getRow() == 1) { // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow() - 1, player.getPos().getCol()))) {
-            // Player attempting to enter a position that is occupied by another entity
-            Log.d("MOVEMENT", "Obstacle encountered!");
-        } else {
-            // Valid movement
+        } else if(!gameMap.isPassable(nextPos)) { // Player attempting to enter a position that is occupied by a Blocker
+            Log.d("MOVEMENT", "Encountered Blocker!");
+        } else { // Valid movement
+            if(gameMap.isOccupied(nextPos)) gameMap.applyEffect(player, gameMap.readPos(nextPos));
             gameMap.draw('-', player.getPos());
-            player.setPosition(player.getPos().getRow() - 1, player.getPos().getCol());
+            player.setPosition(nextPos);
             gameMap.draw(player);
             player.setScore(player.getScore() + 1);
             updateScore();
@@ -129,16 +129,16 @@ public class MainActivity extends AppCompatActivity {
     public void moveDown(View v) {
         Log.d("MOVEMENT", "Moving down...");
 
-        if(player.getPos().getRow() == 5) {
-            // Player attempting to exceed map bounds
+        Position nextPos = new Position(player.getPos().getRow() + 1, player.getPos().getCol());
+
+        if(player.getPos().getRow() == 5) { // Player attempting to exceed map bounds
             Log.d("MOVEMENT", "Boundary reached!");
-        } else if(gameMap.occupiedPos(new Position(player.getPos().getRow() + 1, player.getPos().getCol()))) {
-            // Player attempting to enter a position that is occupied by another entity
-            Log.d("MOVEMENT", "Obstacle encountered!");
-        } else {
-            // Valid movement
+        } else if(!gameMap.isPassable(nextPos)) { // Player attempting to enter a position that is occupied by a Blocker
+            Log.d("MOVEMENT", "Encountered Blocker!");
+        } else { // Valid movement
+            if(gameMap.isOccupied(nextPos)) gameMap.applyEffect(player, gameMap.readPos(nextPos));
             gameMap.draw('-', player.getPos());
-            player.setPosition(player.getPos().getRow() + 1, player.getPos().getCol());
+            player.setPosition(nextPos);
             gameMap.draw(player);
             player.setScore(player.getScore() + 1);
             updateScore();
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             Position p;
             do {
                 p = new Position(numGen.nextInt(5) + 1, numGen.nextInt(5) + 1);
-            } while(gameMap.occupiedPos(p));
+            } while(gameMap.isOccupied(p));
 
             switch(entityNum) {
                 case 1:
