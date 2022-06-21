@@ -10,14 +10,12 @@ public class Player extends Entity {
     // Data member(s)
     protected int HP;
     protected int score;
-    protected Position prevPos;
 
     // Default constructor
     public Player() {
         this.icon = '@';
         this.HP = 100;
         this.pos = new Position(3, 3);
-        this.prevPos = new Position(0, 0);
         this.score = 0;
     }
 
@@ -26,7 +24,6 @@ public class Player extends Entity {
         this.icon = '@';
         this.HP = HP;
         this.pos = pos;
-        this.prevPos = new Position(0, 0);
         this.score = 0;
     }
 
@@ -34,20 +31,13 @@ public class Player extends Entity {
     public void setHP(int h) {
         this.HP = h;
     }
-    public void storePos() {
-        this.prevPos.setRow(this.pos.getRow());
-        this.prevPos.setCol(this.pos.getCol());
-    }
-    public void updateScore() {
-        this.score += 1;
+    public void setScore(int s) {
+        this.score = s;
     }
 
     // Getter(s)
     public int getHP() {
         return this.HP;
-    }
-    public Position getPrevPos() {
-        return this.prevPos;
     }
     public int getScore() {
         return this.score;

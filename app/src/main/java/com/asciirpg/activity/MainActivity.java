@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.asciirpg.entity.Blocker;
+import com.asciirpg.entity.Detractor;
 import com.asciirpg.entity.Entity;
+import com.asciirpg.entity.Healer;
 import com.asciirpg.entity.Player;
+import com.asciirpg.entity.Remover;
 import com.asciirpg.util.Clock;
 import com.asciirpg.util.Map;
 import com.asciirpg.util.Position;
@@ -23,6 +26,8 @@ import java.util.Random;
 TODO (Suggestions)
 - add sounds
 - change button colors
+- add a key so people know what each entity does
+- remove "header"
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     public Map gameMap;
     public Player player;
     public Clock clock;
-    public ArrayList<Entity> entities; // TODO: Remove
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +54,13 @@ public class MainActivity extends AppCompatActivity {
         player = new Player();
         gameMap.draw(player);
         gameMap.processColor();
-        String s = ((TextView) findViewById(R.id.hp)).getText().toString();
-        s = s.substring(0, 4) + String.valueOf(player.getHP());
-        ((TextView) findViewById(R.id.hp)).setText(s);
-        s = ((TextView) findViewById(R.id.score)).getText().toString();
-        s = s.substring(0, 7) + String.valueOf(player.getScore());
-        ((TextView) findViewById(R.id.score)).setText(s);
+        // TODO: Clean up code by putting HP and score updates in separate functions
+        updateHP();
+        updateScore();
 
         // Initializes frame clock
         clock = new Clock();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
-
-        // Initializes entity list
-        entities = new ArrayList<>();
     }
 
     public void moveLeft(View v) {
@@ -77,15 +75,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
-            player.storePos();
             player.setPosition(player.getPos().getRow(),player.getPos().getCol() - 1);
-            Log.d("PREV POS", player.getPrevPos().toString());
-            Log.d("POS", player.getPos().toString());
-            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
-            String s = ((TextView) findViewById(R.id.score)).getText().toString();
-            s = s.substring(0, 7) + String.valueOf(player.getScore());
-            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
+            player.setScore(player.getScore() + 1);
+            updateScore();
         }
 
         intermission();
@@ -103,15 +96,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
-            player.storePos();
             player.setPosition(player.getPos().getRow(),player.getPos().getCol() + 1);
-            Log.d("PREV POS", player.getPrevPos().toString());
-            Log.d("POS", player.getPos().toString());
-            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
-            String s = ((TextView) findViewById(R.id.score)).getText().toString();
-            s = s.substring(0, 7) + String.valueOf(player.getScore());
-            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
+            player.setScore(player.getScore() + 1);
+            updateScore();
         }
 
         intermission();
@@ -129,15 +117,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
-            player.storePos();
             player.setPosition(player.getPos().getRow() - 1, player.getPos().getCol());
-            Log.d("PREV POS", player.getPrevPos().toString());
-            Log.d("POS", player.getPos().toString());
-            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
-            String s = ((TextView) findViewById(R.id.score)).getText().toString();
-            s = s.substring(0, 7) + String.valueOf(player.getScore());
-            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
+            player.setScore(player.getScore() + 1);
+            updateScore();
         }
 
         intermission();
@@ -155,45 +138,32 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Valid movement
             gameMap.draw('-', player.getPos());
-            player.storePos();
             player.setPosition(player.getPos().getRow() + 1, player.getPos().getCol());
-            if(!player.getPos().equals(player.getPrevPos())) player.updateScore();
-            Log.d("PREV POS", player.getPrevPos().toString());
-            Log.d("POS", player.getPos().toString());
-            String s = ((TextView) findViewById(R.id.score)).getText().toString();
-            s = s.substring(0, 7) + String.valueOf(player.getScore());
-            ((TextView) findViewById(R.id.score)).setText(s);
             gameMap.draw(player);
+            player.setScore(player.getScore() + 1);
+            updateScore();
         }
 
         intermission();
     }
 
     private void intermission() {
-        /*
-        TODO: Use to process data and actions between frames
-        - call function after every player movement
-        - spawn items and enemies
-        - carry out enemy actions
-         */
-
         clock.nextFrame();
 
         player.setHP(player.getHP() - 1);
-        String s = ((TextView) findViewById(R.id.hp)).getText().toString();
-        s = s.substring(0, 4) + String.valueOf(player.getHP());
-        ((TextView) findViewById(R.id.hp)).setText(s);
+        updateHP();
 
+        // Switch to GameOver activity when player runs out of HP
         if(player.getHP() <= 0) {
             Intent i = new Intent(MainActivity.this, GameOver.class);
             i.putExtra("score", player.getScore());
             startActivity(i);
         }
 
+        // Entities are spawned every 10 frames
         if(clock.getFrame() % 10 == 0) {
             Random numGen = new Random();
-            // int entityNum = numGen.nextInt(4) + 1;
-            int entityNum = 1;
+            int entityNum = numGen.nextInt(4) + 1;
             Position p;
             do {
                 p = new Position(numGen.nextInt(5) + 1, numGen.nextInt(5) + 1);
@@ -201,22 +171,44 @@ public class MainActivity extends AppCompatActivity {
 
             switch(entityNum) {
                 case 1:
-                    Log.d("SPAWN", "Spawning new blocker!");
+                    Log.d("SPAWN", "Spawning new Blocker!");
                     Blocker b = new Blocker(p);
                     gameMap.draw(b);
                     break;
                 case 2:
-                    // TODO: Add Remover spawn
+                    Log.d("SPAWN", "Spawning new Remover!");
+                    Remover r = new Remover(p);
+                    gameMap.draw(r);
+                    break;
                 case 3:
-                    // TODO: Add Detractor spawn
+                    Log.d("SPAWN", "Spawning new Detractor!");
+                    Detractor d = new Detractor(p);
+                    gameMap.draw(d);
+                    break;
                 case 4:
-                    // TODO: Add Healer spawn
+                    Log.d("SPAWN", "Spawning new Healer!");
+                    Healer h = new Healer(p);
+                    gameMap.draw(h);
                     break;
             }
         }
 
         gameMap.processColor();
         Log.d("FRAME", String.valueOf(clock.getFrame()));
+    }
+
+    // Transfers new HP value to TextView
+    private void updateHP() {
+        String s = ((TextView) findViewById(R.id.hp)).getText().toString();
+        s = s.substring(0, 4) + String.valueOf(player.getHP());
+        ((TextView) findViewById(R.id.hp)).setText(s);
+    }
+
+    // Transfers new score value to TextView
+    private void updateScore() {
+        String s = ((TextView) findViewById(R.id.score)).getText().toString();
+        s = s.substring(0, 7) + String.valueOf(player.getScore());
+        ((TextView) findViewById(R.id.score)).setText(s);
     }
 
 }
