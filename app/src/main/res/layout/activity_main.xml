@@ -101,18 +101,18 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="225dp"
+        android:layout_height="225dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8">
+        app:layout_constraintVertical_bias="0.85">
 
         <ImageView
             android:id="@+id/up_button"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:clickable="true"
             android:contentDescription="@string/up_button_desc"
             android:onClick="moveUp"
@@ -125,8 +125,8 @@
 
         <ImageView
             android:id="@+id/down_button"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:clickable="true"
             android:contentDescription="@string/down_button_desc"
             android:onClick="moveDown"
@@ -139,8 +139,8 @@
 
         <ImageView
             android:id="@+id/right_button"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:clickable="true"
             android:contentDescription="@string/right_button_desc"
             android:onClick="moveRight"
@@ -153,8 +153,8 @@
 
         <ImageView
             android:id="@+id/left_button"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:clickable="true"
             android:contentDescription="@string/left_button_desc"
             android:onClick="moveLeft"
