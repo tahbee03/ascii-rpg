@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         }
 
-        // Entities are spawned every 10 frames
-        if(clock.getFrame() % 10 == 0) {
+        // Entities are spawned every 5 frames
+        if(clock.getFrame() % 5 == 0) {
             Random numGen = new Random();
             int entityNum = numGen.nextInt(4) + 1;
             Position p;
@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                 p = new Position(numGen.nextInt(5) + 1, numGen.nextInt(5) + 1);
             } while(gameMap.isOccupied(p));
 
-            // QUESTION: If I add the entities directly to the list, will the name/reference be a problem?
             switch(entityNum) {
                 case 1:
                     Log.d("SPAWN", "Spawning new Blocker!");
