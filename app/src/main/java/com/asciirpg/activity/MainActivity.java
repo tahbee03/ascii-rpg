@@ -16,7 +16,7 @@ import com.asciirpg.entity.Healer;
 import com.asciirpg.entity.Player;
 import com.asciirpg.entity.Remover;
 import com.asciirpg.util.Clock;
-import com.asciirpg.util.Map;
+import com.asciirpg.util.GameMap;
 import com.asciirpg.util.Position;
 
 import java.util.Random;
@@ -34,7 +34,7 @@ TODO (Suggestions)
 public class MainActivity extends AppCompatActivity {
 
     // Data member(s)
-    public Map gameMap;
+    public GameMap gameMap;
     public Player player;
     public Clock clock;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initializes map
-        gameMap = new Map();
+        gameMap = new GameMap();
         gameMap.pushRow(findViewById(R.id.row1));
         gameMap.pushRow(findViewById(R.id.row2));
         gameMap.pushRow(findViewById(R.id.row3));
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         gameMap.processColor();
         updateHP();
         updateScore();
+        gameMap.pushEntity(player);
 
         // Initializes frame clock
         clock = new Clock();
@@ -169,26 +170,31 @@ public class MainActivity extends AppCompatActivity {
                 p = new Position(numGen.nextInt(5) + 1, numGen.nextInt(5) + 1);
             } while(gameMap.isOccupied(p));
 
+            // QUESTION: If I add the entities directly to the list, will the name/reference be a problem?
             switch(entityNum) {
                 case 1:
                     Log.d("SPAWN", "Spawning new Blocker!");
                     Blocker b = new Blocker(p);
                     gameMap.draw(b);
+                    gameMap.pushEntity(b);
                     break;
                 case 2:
                     Log.d("SPAWN", "Spawning new Remover!");
                     Remover r = new Remover(p);
                     gameMap.draw(r);
+                    gameMap.pushEntity(r);
                     break;
                 case 3:
                     Log.d("SPAWN", "Spawning new Detractor!");
                     Detractor d = new Detractor(p);
                     gameMap.draw(d);
+                    gameMap.pushEntity(d);
                     break;
                 case 4:
                     Log.d("SPAWN", "Spawning new Healer!");
                     Healer h = new Healer(p);
                     gameMap.draw(h);
+                    gameMap.pushEntity(h);
                     break;
             }
         }

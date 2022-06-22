@@ -2,30 +2,46 @@ package com.asciirpg.util;
 
 import android.util.Log;
 import android.widget.TextView;
+
+import com.asciirpg.entity.Blocker;
 import com.asciirpg.entity.Entity;
 import com.asciirpg.entity.Player;
-import java.util.ArrayList;
+import java.util.*;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.graphics.Color;
 
+// NOTE: I attempted to use a HashMap<Position, Integer> for the entity list, but it just overcomplicated things.
+
 /**
  * Game map is created using "matrix" and Position class.
  */
-public class Map {
+public class GameMap {
 
     // Data member(s)
     private final ArrayList<TextView> rows;
+    private final ArrayList<Entity> entityList;
 
     // Default constructor
-    public Map() {
+    public GameMap() {
         rows = new ArrayList<>();
+        entityList = new ArrayList<>();
     }
 
     // Adds row of text to map
     public void pushRow(TextView t) {
         rows.add(t);
+    }
+
+    // Adds an entity to the map
+    public void pushEntity(Entity e) {
+        entityList.add(e);
+    }
+
+    // Removes an entity from the map
+    public void removeEntity(Entity e) {
+        entityList.remove(e);
     }
 
     // Returns a row of text
@@ -68,11 +84,31 @@ public class Map {
         return readPos(p) != '#';
     }
 
+    // Applies the effect of the encountered entity
     public void applyEffect(Player p, char c) {
         switch(c) {
             case '+':
                 // TODO: Implement Remover effect
                 Log.d("EFFECT", "Encountered Remover!");
+                boolean containsBlocker = false;
+                for(Entity e : entityList) {
+                    if (e instanceof Blocker) {
+                        containsBlocker = true;
+                        break;
+                    }
+                }
+
+                if(containsBlocker) {
+                    Random numGen = new Random();
+                    int index;
+                    do {
+                        index = numGen.nextInt(entityList.size());
+                    } while(!(entityList.get(index) instanceof Blocker));
+
+                    draw('-', entityList.get(index).getPos());
+                    entityList.remove(index);
+
+                }
                 break;
             case '*':
                 Log.d("EFFECT", "Encountered Healer!");
