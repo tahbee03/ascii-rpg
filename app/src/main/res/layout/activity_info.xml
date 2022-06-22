@@ -92,7 +92,7 @@
 
         <TextView
             android:id="@+id/remover_info"
-            android:layout_width="375"
+            android:layout_width="375dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inconsolata"
             android:text="@string/remover_info"
