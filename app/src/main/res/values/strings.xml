@@ -9,7 +9,31 @@
     <string name="hp">HP: x</string>
     <string name="score">Score: x</string>
     <string name="start_text">START</string>
+    <string name="info_text">HOW TO PLAY</string>
     <string name="game_over_text_1">GAME</string>
     <string name="game_over_text_2">OVER</string>
     <string name="restart_text">RESTART</string>
+    <string name="back_text">BACK</string>
+
+    <string name="instructions">INSTRUCTIONS: Use the arrow keys to move around the map. As you move around, your HP will decrease. Also, entities with special abilities will randomly appear. The entity abilities will have various effects on your gameplay. Your goal is to last as long as you can.</string>
+    <string name="instructions_1">
+        Use the arrow keys to move around the map.
+    </string>
+    <string name="instructions_2">
+        As you move around, your HP will decrease.
+    </string>
+    <string name="instructions_3">
+        Also, entities with special abilities will randomly appear.
+    </string>
+    <string name="instructions_4">
+        The entity abilities will have various effects on your gameplay.
+    </string>
+    <string name="instructions_5">
+        Your goal is to last as long as you can.
+    </string>
+    <string name="player_info">PLAYER (@): The player\'s character.</string>
+    <string name="healer_info">HEALER (*): Increases the player\'s HP.</string>
+    <string name="detractor_info">DETRACTOR (%): Decreases the player\'s HP.</string>
+    <string name="blocker_info">BLOCKER (#): Decreases accessible areas on map.</string>
+    <string name="remover_info">REMOVER (+): Increases accessible areas on map.</string>
 </resources>

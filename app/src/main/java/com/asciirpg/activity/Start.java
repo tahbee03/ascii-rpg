@@ -14,11 +14,19 @@ public class Start extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        Button b = (Button) findViewById(R.id.start_button);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button b1 = (Button) findViewById(R.id.start_button);
+        b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Start.this, MainActivity.class));
+            }
+        });
+
+        Button b2 = (Button) findViewById(R.id.info_button);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Start.this, Info.class));
             }
         });
     }

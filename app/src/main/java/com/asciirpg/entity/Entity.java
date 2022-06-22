@@ -10,10 +10,10 @@ public abstract class Entity {
     /*
     TYPES:
     - player (@, blue)
-    - blocker (#, red)
-    - remover (+, green)
     - healer (*, yellow)
     - detractor (%, brown)
+    - blocker (#, red)
+    - remover (+, green)
      */
 
     // Data member(s)
