@@ -19,6 +19,11 @@ public abstract class Entity {
     // Data member(s)
     protected char icon;
     protected Position pos;
+    protected String ID;
+    // TODO: Create a unique ID for all spawned entities to make it easier to search for them
+    // THEN, create map to store IDs and positions
+    // THEN, create algorithm to find entities with ID
+    // THEN, use algorithm to implement Remover effect
 
     // Setters
     public void setIcon(char c) {
@@ -39,5 +44,10 @@ public abstract class Entity {
     public Position getPos() {
         return this.pos;
     }
+    public String getID() {
+        return this.ID;
+    }
+
+    abstract public void generateID();
 
 }

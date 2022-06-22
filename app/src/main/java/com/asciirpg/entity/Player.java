@@ -8,8 +8,8 @@ import com.asciirpg.util.Position;
 public class Player extends Entity {
 
     // Data member(s)
-    protected int HP;
-    protected int score;
+    private int HP;
+    private int score;
 
     // Default constructor
     public Player() {
@@ -17,6 +17,7 @@ public class Player extends Entity {
         this.HP = 100;
         this.pos = new Position(3, 3);
         this.score = 0;
+        generateID();
     }
 
     // Parametrized constructor
@@ -25,6 +26,7 @@ public class Player extends Entity {
         this.HP = HP;
         this.pos = pos;
         this.score = 0;
+        generateID();
     }
 
     // Setter(s)
@@ -41,5 +43,9 @@ public class Player extends Entity {
     }
     public int getScore() {
         return this.score;
+    }
+
+    public void generateID() {
+        this.ID = "p0000";
     }
 }
